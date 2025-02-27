@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Update Expense{% endblock %}
+
+{% block content %}
+    <h1>Update Expense</h1>
+    <form action="{{ url_for('update_expense') }}" method="POST">
+        <!-- Date Input -->
+        <input type="text" name="date" placeholder="Enter date (DD-MM-YYYY)" required>
+
+        <!-- Amount Input -->
+        <input type="text" name="amount" placeholder="Enter amount (leave blank to keep unchanged)">
+
+        <!-- Mode Dropdown -->
+        <select name="mode">
+            <option value="">Keep unchanged</option>
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>    
+        </select>
+
+        <!-- Hidden Input to Store Selected Category -->
+        <input type="hidden" name="category" id="selectedCategory">
+
+        <!-- Category Buttons -->
+        <div class="categories">
+            <input type="button" class="category shopping" value="Shopping" onclick="selectCategory('Shopping')">
+            <input type="button" class="category groceries" value="Groceries" onclick="selectCategory('Groceries')">
+            <input type="button" class="category travel" value="Travel" onclick="selectCategory('Travel')">
+            <input type="button" class="category education" value="Education" onclick="selectCategory('Education')">
+            <input type="button" class="category utilities" value="Utilities" onclick="selectCategory('Utilities')">
+            <input type="button" class="category entertainment" value="Entertainment" onclick="selectCategory('Entertainment')">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Update</button>
+    </form>
+
+    <script>
+        function selectCategory(category) {
+            document.getElementById("selectedCategory").value = category;
+            
+            // Remove active class from all buttons
+            document.querySelectorAll(".category").forEach(btn => btn.classList.remove("active"));
+
+            // Add active class to selected button
+            document.querySelector(`.category[value="${category}"]`).classList.add("active");
+        }
+    </script>
+{% endblock %}

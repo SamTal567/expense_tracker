@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Expense Tracker{% endblock %}
+
+{% block content %}
+    <h1>Add Expense</h1>
+    <form action="{{ url_for('add_new_data') }}" method="POST">
+        <!-- Amount Input -->
+        <input type="text" name="amount" placeholder="Enter amount" required>
+        <input type="hidden" name="category" id="selectedCategory">
+
+        <!-- Mode Dropdown -->
+        <select name="mode">
+            <option value="Online">Online</option>
+            <option value="Offline">Offline</option>    
+        </select>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Category Buttons -->
+    <div class="categories">
+        <input type="button" class="category shopping" value="Shopping" onclick="selectCategory('Shopping')">
+        <input type="button" class="category groceries" value="Groceries" onclick="selectCategory('Groceries')">
+        <input type="button" class="category travel" value="Travel" onclick="selectCategory('Travel')">
+        <input type="button" class="category education" value="Education" onclick="selectCategory('Education')">
+        <input type="button" class="category utilities" value="Utilities" onclick="selectCategory('Utilities')">
+        <input type="button" class="category entertainment" value="Entertainment" onclick="selectCategory('Entertainment')">
+    </div>
+
+    <script>
+        function selectCategory(category) {
+            document.getElementById("selectedCategory").value = category;
+            
+            // Remove active class from all buttons
+            document.querySelectorAll(".category").forEach(btn => btn.classList.remove("active"));
+
+            // Add active class to selected button
+            document.querySelector(`.category[value="${category}"]`).classList.add("active");
+        }
+    </script>
+{% endblock %}
